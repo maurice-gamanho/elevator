@@ -1,4 +1,4 @@
-# elevator
+# Elevator
 Elevator coding challenge
 
 To use:
