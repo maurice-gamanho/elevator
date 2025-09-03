@@ -30,6 +30,7 @@ public class ElevatorController {
 
     /**
      * Buttons for selecting floors, inside elevator cabin
+     * Synchronize "selected floors" access to prevent undesirable side effects of mashing several buttons at once
      * @param floor  desired floor number
      */
     public void selectFloor(int floor) {
@@ -38,7 +39,9 @@ public class ElevatorController {
             System.out.println("Selection " + floor + " ignored, system in maintenance mode");
             return;
         }
-        m_selectedFloors.add(floor);
+        synchronized (this) {
+            m_selectedFloors.add(floor);
+        }
         System.out.println("Wake up worker");
         synchronized (m_worker) {
             m_worker.notify(); // wake up worker

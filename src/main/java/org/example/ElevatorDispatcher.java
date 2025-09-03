@@ -23,12 +23,13 @@ public class ElevatorDispatcher {
     /**
      * Call an elevator; the floor where the button is pressed and the direction wanted
      * are parameter
+     * Prevent race conditions by synchronizing
      * @param thisFloor  floor where button is located
      * @param directionUp  direction (usually up/down buttons)
      * @return  a future of elevator controls; they can only be used when the elevator has arrived
      *          null if the system is under maintenance
      */
-    public Future<ElevatorController> call(int thisFloor, boolean directionUp) {
+    public synchronized Future<ElevatorController> call(int thisFloor, boolean directionUp) {
         Map<Integer, ElevatorController> elevators = m_manager.getElevators();
 
         ElevatorController c = null;
